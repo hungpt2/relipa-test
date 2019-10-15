@@ -19,6 +19,6 @@ app.use('/user', user);
 // Set up mongoose connection
 const db = require('./mlab');
 
-app.listen(config.port, () => {
+app.listen(process.env.PORT || config.port, () => {
     console.log('Server is up and running on port numner ' + config.port);
 });
