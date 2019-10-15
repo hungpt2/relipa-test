@@ -2,12 +2,16 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const config = require('./config');
 
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
+
 // initialize our express app
 const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 // USER
 const user = require('./routes/user.route');
 app.use('/user', user);

@@ -7,5 +7,12 @@ module.exports = {
         idDb: 'ds333768',
         port: '33768',
         dbName: 'relipa-test'
+    },
+    mailTrap: {
+        user_name: '6d11d6ae5c8032',
+        password: 'b067f3e49c2dc5',
+        address: 'smtp.mailtrap.io',
+        domain: 'smtp.mailtrap.io',
+        port: '2525',
     }
 }
