@@ -7,6 +7,7 @@ let UserSchema = new Schema({
     password: {type: String, required: true, min: constant.passwordMin, max: constant.passwordMax},
     createdAt: {type: Date, required: true},
     isVerified: {type: Boolean, required: true},
+    role: {type: String, required: true},
     verifyCode: {type: String},
     lifeTimeCode: {type: String},
     token: {type: String},

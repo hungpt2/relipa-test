@@ -21,6 +21,7 @@ exports.createUser = async (req, res) => {
             isVerified: false,
             verifyCode: utility.makeId(12),
             lifeTimeCode: new Date().getTime() + config.lifeTimeCode,
+            role: req.body.role
         }
     );
 
