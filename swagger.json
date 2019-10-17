@@ -1,15 +1,103 @@
 {
-    "info": {
-      "title": "Node Swagger API",
-      "version": "1.0.0",
-      "description": "Demonstrating how to describe a RESTful API with Swagger"
+  "swagger": "2.0",
+  "info": {
+    "description": "ShopRelipees API document made by hungpt2",
+    "version": "1.0.0",
+    "title": "Shop Relipee API documentation",
+    "contact": {
+      "email": "hungpt2@relipasoft.com"
+    }
+  },
+  "host": "https://sheltered-badlands-02083.herokuapp.com",
+  "basePath": "/v1",
+  "tags": [
+    {
+      "name": "Shop Relipees",
+      "description": "API for Shop Relipees"
+    }
+  ],
+  "schemes": ["http", "https"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "paths": {
+    "/register": {
+      "post": {
+        "tags": ["User"],
+        "summary": "API Endpoint for create User",
+        "description": "Create new User in database",
+        "parameters": [
+          {
+            "name": "user",
+            "description": "User params to create new user",
+            "in": "body",
+            "required": "true",
+            "schema": {
+              "$ref": "#definitions/RegisterUser"
+            }
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "User Created successfully!!!",
+            "schema": {
+              "$ref": "#definitions/RegisterUserResponseSuccess"
+            }
+          },
+          "400": {
+            "description": "User Created Failed!!!",
+            "schema": {
+              "$ref": "#definitions/RegisterUserResponseFail"
+            }
+          }
+        }
+      }
+    }
+  },
+
+  "definitions": {
+    "RegisterUser": {
+      "required": ["email", "password", "role"],
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "role": {
+          "type": "integer",
+          "format": "Int32"
+        }
+      }
     },
-    "host": "localhost:3000",
-    "basePath": "/",
-    "swagger": "2.0",
-    "paths": { },
-    "definitions": { },
-    "responses": { },
-    "parameters": { },
-    "securityDefinitions": { }
+    "RegisterUserResponse": {
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "role": {
+          "type": "integer",
+          "format": "Int32"
+        }
+      }
+    },
+    "RegisterUserResponseSuccess": {
+      "properties": {
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "RegisterUserResponseFail": {
+      "properties": {
+        "message": {
+          "type": "string"
+        },
+        "user": {
+          "$ref": "#definitions/RegisterUserResponse"
+        }
+      }
+    }
+  }
 }

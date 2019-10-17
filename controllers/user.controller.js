@@ -8,7 +8,6 @@ exports.createUser = async (req, res) => {
     const checker = await userTools.userValidator(req.body);
     if (!checker.status) {
         res.status(400).send({
-            status: 400,
             message: checker.message
         })
         return
@@ -30,8 +29,11 @@ exports.createUser = async (req, res) => {
             return next(err);
         }
         res.status(200).send({
-            status: 200,
-            message: 'User Created successfully!!!'
+            message: 'User Created successfully!!!',
+            data: {
+                email: req.body.email,
+                role: req.body.role
+            }
         })
     });
 
@@ -84,7 +86,6 @@ exports.login = (req, res) => {
             tokenExpired,
         },{ new: true, upsert: true }, (err, user) => {
             res.status(200).send({
-                status: 200,
                 message: 'Login successful !!!',
                 data: {
                     email: user.email,
