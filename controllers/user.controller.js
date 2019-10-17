@@ -3,6 +3,16 @@ const utility = require('../common/utility');
 const config = require('../config');
 const userTools = require('../common/validator/user');
 
+exports.authenticate = (token) => {
+    const user = User.findOne({ token, tokenExpired: {$gt: new Date()} }, (err, user) => {
+        if (user) {
+            return {
+                email: user.email,
+                role: user.role
+            };
+        }
+    })
+}
 
 exports.createUser = async (req, res) => {
     const checker = await userTools.userValidator(req.body);
@@ -19,7 +29,7 @@ exports.createUser = async (req, res) => {
             createdAt: new Date(),
             isVerified: false,
             verifyCode: utility.makeId(12),
-            lifeTimeCode: new Date().getTime() + config.lifeTimeCode,
+            lifeTimeCode: new Date(new Date().getTime() + config.lifeTimeCode),
             role: req.body.role
         }
     );
@@ -41,11 +51,13 @@ exports.createUser = async (req, res) => {
 };
 
 exports.verifyAccount = (req, res) => {
-    User.findOne({'verifyCode': req.params.id}, (err, user) => {
-        const now = new Date().getTime();
-        if (now > user.lifeTimeCode || user.isVerified) {
+    User.findOne({
+        'verifyCode': req.params.id,
+        verifyCode: false,
+        lifeTimeCode: {$gt: new Date()}
+    }, (err, user) => {
+        if (!user) {
             res.status(400).send({
-                status: 400,
                 message: 'Code invalid or expired !!!'
             })
         } else {
@@ -58,8 +70,11 @@ exports.verifyAccount = (req, res) => {
                 upsert: true
             }, (err, user) => {
                 res.status(200).send({
-                    status: 200,
-                    message: 'Account activated !!!'
+                    message: 'Account activated !!!',
+                    user: {
+                        email: user.email,
+                        role: user.role,
+                    }
                 })
             });
         }
@@ -73,12 +88,11 @@ exports.login = (req, res) => {
     }, (err, user) => {
         if (!user.isVerified) {
             res.status(400).send({
-                status: 400,
                 message: 'Account have NOT activated !!!'
             })
         }
         const token = utility.makeId(12);
-        const tokenExpired = new Date().getTime() + config.lifeTimeCode;
+        const tokenExpired = new Date(new Date().getTime() + config.lifeTimeCode);
         User.findOneAndUpdate({
             _id: user._id
         }, {
@@ -91,6 +105,7 @@ exports.login = (req, res) => {
                     email: user.email,
                     token,
                     tokenExpired,
+                    role: user.role,
                     createdAt: user.createdAt
                 }
             });

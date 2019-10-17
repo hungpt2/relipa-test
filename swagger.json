@@ -8,7 +8,7 @@
       "email": "hungpt2@relipasoft.com"
     }
   },
-  "host": "https://sheltered-badlands-02083.herokuapp.com",
+  "host": "sheltered-badlands-02083.herokuapp.com",
   "basePath": "/v1",
   "tags": [
     {
@@ -22,7 +22,7 @@
   "paths": {
     "/register": {
       "post": {
-        "tags": ["User"],
+        "tags": ["Authentication"],
         "summary": "API Endpoint for create User",
         "description": "Create new User in database",
         "parameters": [
@@ -41,13 +41,77 @@
           "200": {
             "description": "User Created successfully!!!",
             "schema": {
-              "$ref": "#definitions/RegisterUserResponseSuccess"
+              "$ref": "#definitions/RegisterResponseSuccess"
             }
           },
           "400": {
             "description": "User Created Failed!!!",
             "schema": {
-              "$ref": "#definitions/RegisterUserResponseFail"
+              "$ref": "#definitions/ResponseMessage"
+            }
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "tags": ["Authentication"],
+        "summary": "API Endpoint for login",
+        "description": "Login and get token",
+        "parameters": [
+          {
+            "name": "user",
+            "description": "User params to create new user",
+            "in": "body",
+            "required": "true",
+            "schema": {
+              "$ref": "#definitions/Login"
+            }
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "User Created successfully!!!",
+            "schema": {
+              "$ref": "#definitions/LoginResponseSuccess"
+            }
+          },
+          "400": {
+            "description": "User Created Failed!!!",
+            "schema": {
+              "$ref": "#definitions/ResponseMessage"
+            }
+          }
+        }
+      }
+    },
+    "/activated/{id}": {
+      "get": {
+        "tags": ["Authentication"],
+        "summary": "API Endpoint for login",
+        "description": "Login and get token",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": "true",
+            "description": "verify code",
+            "type": "string"
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "User Created successfully!!!",
+            "schema": {
+              "$ref": "#definitions/RegisterResponseSuccess"
+            }
+          },
+          "400": {
+            "description": "User Created Failed!!!",
+            "schema": {
+              "$ref": "#definitions/ResponseMessage"
             }
           }
         }
@@ -56,6 +120,17 @@
   },
 
   "definitions": {
+    "Login": {
+      "required": ["email", "password"],
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
     "RegisterUser": {
       "required": ["email", "password", "role"],
       "properties": {
@@ -82,20 +157,41 @@
         }
       }
     },
-    "RegisterUserResponseSuccess": {
+    "ResponseMessage": {
       "properties": {
         "message": {
           "type": "string"
         }
       }
     },
-    "RegisterUserResponseFail": {
+    "RegisterResponseSuccess": {
       "properties": {
         "message": {
           "type": "string"
         },
         "user": {
           "$ref": "#definitions/RegisterUserResponse"
+        }
+      }
+    },
+    "LoginResponseSuccess": {
+      "required": ["email", "password"],
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "token": {
+          "type": "string"
+        },
+        "tokenExpired": {
+          "type": "string"
+        },
+        "role": {
+          "type": "integer",
+          "format": "Int32"
+        },
+        "createdAt": {
+          "type": "string"
         }
       }
     }
