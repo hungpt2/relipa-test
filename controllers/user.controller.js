@@ -61,10 +61,15 @@ exports.verifyAccount = (req, res) => {
                 message: 'Code invalid or expired !!!'
             })
         } else {
+            let tmpId = utility.makeId(12)
+            while (User.findOne({ id })) {
+                tmpId = utility.makeId(12)
+            }
             User.findOneAndUpdate({
                 _id: user._id
             }, {
-                isVerified: true
+                isVerified: true,
+                id: tmpId
             },{
                 new: true,
                 upsert: true

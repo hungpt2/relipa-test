@@ -1,4 +1,5 @@
 const postMan = require('./email');
+const User = require('../models/user.model');
 
 exports.makeId = (length) => {
     var result           = '';

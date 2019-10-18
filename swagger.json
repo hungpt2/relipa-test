@@ -89,8 +89,8 @@
     "/activated/{id}": {
       "get": {
         "tags": ["Authentication"],
-        "summary": "API Endpoint for login",
-        "description": "Login and get token",
+        "summary": "API Endpoint for active account",
+        "description": "Verify Account",
         "parameters": [
           {
             "name": "id",
@@ -103,13 +103,95 @@
         "produces": ["application/json"],
         "responses": {
           "200": {
-            "description": "User Created successfully!!!",
+            "description": "Account Activated!!!",
             "schema": {
               "$ref": "#definitions/RegisterResponseSuccess"
             }
           },
           "400": {
-            "description": "User Created Failed!!!",
+            "description": "Verify Failed!!!",
+            "schema": {
+              "$ref": "#definitions/ResponseMessage"
+            }
+          }
+        }
+      }
+    },
+    "/store": {
+      "get": {
+        "tags": ["Store Management"],
+        "summary": "API Endpoint for Store Management",
+        "description": "Get list Store",
+        "parameters": [],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Get list successfully!!!"
+          },
+          "400": {
+            "description": "Get list Failed!!!",
+            "schema": {
+              "$ref": "#definitions/ResponseMessage"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Store Management"],
+        "summary": "API Endpoint for Create Store",
+        "description": "Create Store",
+        "parameters": [],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Create store successfully!!!"
+          },
+          "400": {
+            "description": "Create store Failed!!!",
+            "schema": {
+              "$ref": "#definitions/ResponseMessage"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Store Management"],
+        "summary": "API Endpoint for Update Store",
+        "description": "Get list Store",
+        "parameters": [],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Update Store successfully!!!"
+          },
+          "400": {
+            "description": "Update Store Failed!!!",
+            "schema": {
+              "$ref": "#definitions/ResponseMessage"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Store Management"],
+        "summary": "API Endpoint for Delete Store",
+        "description": "Delete Store",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": "true",
+            "description": "store id",
+            "type": "string"
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Delete Store successfully!!!"
+          },
+          "400": {
+            "description": "Get list Failed!!!",
             "schema": {
               "$ref": "#definitions/ResponseMessage"
             }
