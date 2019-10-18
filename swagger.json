@@ -16,7 +16,7 @@
       "description": "API for Shop Relipees"
     }
   ],
-  "schemes": ["http", "https"],
+  "schemes": ["https"],
   "consumes": ["application/json"],
   "produces": ["application/json"],
   "paths": {
