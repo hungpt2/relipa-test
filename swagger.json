@@ -200,7 +200,6 @@
       }
     }
   },
-
   "definitions": {
     "Login": {
       "required": ["email", "password"],
