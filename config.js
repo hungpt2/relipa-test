@@ -1,5 +1,5 @@
 module.exports = {
-    port: 8080,
+    port: 8888,
     lifeTimeCode: 86400000, // 1 day
     db: {
         user: 'admin',
