@@ -52,8 +52,8 @@ exports.createUser = async (req, res) => {
 
 exports.verifyAccount = (req, res) => {
     User.findOne({
-        'verifyCode': req.params.id,
-        verifyCode: false,
+        verifyCode: req.params.id,
+        isVerified: false,
         lifeTimeCode: {$gt: new Date()}
     }, (err, user) => {
         if (!user) {
@@ -61,15 +61,10 @@ exports.verifyAccount = (req, res) => {
                 message: 'Code invalid or expired !!!'
             })
         } else {
-            let tmpId = utility.makeId(12)
-            while (User.findOne({ id })) {
-                tmpId = utility.makeId(12)
-            }
             User.findOneAndUpdate({
                 _id: user._id
             }, {
                 isVerified: true,
-                id: tmpId
             },{
                 new: true,
                 upsert: true
