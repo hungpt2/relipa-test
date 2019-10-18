@@ -14,6 +14,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+// CURRENCY
+const currency = require('./routes/currency.route');
+app.use('/v1/currency', currency);
+
 // USER
 const user = require('./routes/user.route');
 app.use('/v1', user);

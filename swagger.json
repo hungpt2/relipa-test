@@ -8,7 +8,7 @@
       "email": "hungpt2@relipasoft.com"
     }
   },
-  "host": "sheltered-badlands-02083.herokuapp.com",
+  "host": "localhost:8888",
   "basePath": "/v1",
   "tags": [
     {
@@ -20,6 +20,31 @@
   "consumes": ["application/json"],
   "produces": ["application/json"],
   "paths": {
+    "/currency": {
+      "post": {
+        "tags": ["Currency"],
+        "summary": "API Endpoint for getting rate of USD exchange to VND",
+        "description": "API Endpoint for getting rate of USD exchange to VND",
+        "parameters": [],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Got successfully!!!",
+            "schema": {
+              "USDVND": {
+                "type": "string"
+              }
+            }
+          },
+          "400": {
+            "description": "Got Failed!!!",
+            "schema": {
+              "$ref": "#definitions/ResponseMessage"
+            }
+          }
+        }
+      }
+    },
     "/register": {
       "post": {
         "tags": ["Authentication"],
@@ -118,6 +143,88 @@
       }
     },
     "/store": {
+      "get": {
+        "tags": ["Store Management"],
+        "summary": "API Endpoint for Store Management",
+        "description": "Get list Store",
+        "parameters": [],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Get list successfully!!!"
+          },
+          "400": {
+            "description": "Get list Failed!!!",
+            "schema": {
+              "$ref": "#definitions/ResponseMessage"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Store Management"],
+        "summary": "API Endpoint for Create Store",
+        "description": "Create Store",
+        "parameters": [],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Create store successfully!!!"
+          },
+          "400": {
+            "description": "Create store Failed!!!",
+            "schema": {
+              "$ref": "#definitions/ResponseMessage"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Store Management"],
+        "summary": "API Endpoint for Update Store",
+        "description": "Get list Store",
+        "parameters": [],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Update Store successfully!!!"
+          },
+          "400": {
+            "description": "Update Store Failed!!!",
+            "schema": {
+              "$ref": "#definitions/ResponseMessage"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Store Management"],
+        "summary": "API Endpoint for Delete Store",
+        "description": "Delete Store",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": "true",
+            "description": "store id",
+            "type": "string"
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Delete Store successfully!!!"
+          },
+          "400": {
+            "description": "Get list Failed!!!",
+            "schema": {
+              "$ref": "#definitions/ResponseMessage"
+            }
+          }
+        }
+      }
+    },
+    "/product": {
       "get": {
         "tags": ["Store Management"],
         "summary": "API Endpoint for Store Management",
