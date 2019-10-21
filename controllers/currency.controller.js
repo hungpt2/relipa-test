@@ -9,6 +9,7 @@ exports.getCurrency = async (req, res) => {
         }).on('end', function() {
             let data = Buffer.concat(chunks);
             let schema = JSON.parse(data);
+            console.log(schema);
             if (schema) {
                 res.status(200).send({
                     data: schema.quotes.USDVND

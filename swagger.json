@@ -8,7 +8,7 @@
       "email": "hungpt2@relipasoft.com"
     }
   },
-  "host": "sheltered-badlands-02083.herokuapp.com",
+  "host": "localhost:8888",
   "basePath": "/v1",
   "tags": [
     {
@@ -16,12 +16,12 @@
       "description": "API for Shop Relipees"
     }
   ],
-  "schemes": ["https"],
+  "schemes": ["http", "https"],
   "consumes": ["application/json"],
   "produces": ["application/json"],
   "paths": {
     "/currency": {
-      "post": {
+      "get": {
         "tags": ["Currency"],
         "summary": "API Endpoint for getting rate of USD exchange to VND",
         "description": "API Endpoint for getting rate of USD exchange to VND",
