@@ -226,7 +226,7 @@
     },
     "/product": {
       "get": {
-        "tags": ["Store Management"],
+        "tags": ["Product Management"],
         "summary": "API Endpoint for Store Management",
         "description": "Get list Store",
         "parameters": [],
@@ -244,7 +244,7 @@
         }
       },
       "post": {
-        "tags": ["Store Management"],
+        "tags": ["Product Management"],
         "summary": "API Endpoint for Create Store",
         "description": "Create Store",
         "parameters": [],
@@ -262,7 +262,7 @@
         }
       },
       "put": {
-        "tags": ["Store Management"],
+        "tags": ["Product Management"],
         "summary": "API Endpoint for Update Store",
         "description": "Get list Store",
         "parameters": [],
@@ -280,7 +280,7 @@
         }
       },
       "delete": {
-        "tags": ["Store Management"],
+        "tags": ["Product Management"],
         "summary": "API Endpoint for Delete Store",
         "description": "Delete Store",
         "parameters": [
