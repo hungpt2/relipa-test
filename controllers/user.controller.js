@@ -86,29 +86,35 @@ exports.login = (req, res) => {
         email: req.body.email,
         password: req.body.password
     }, (err, user) => {
-        if (!user.isVerified) {
+        if (user) {
+            if (!user.isVerified) {
+                res.status(400).send({
+                    message: 'Account have NOT activated !!!'
+                })
+            }
+            const token = utility.makeId(12);
+            const tokenExpired = new Date(new Date().getTime() + config.lifeTimeCode);
+            User.findOneAndUpdate({
+                _id: user._id
+            }, {
+                token,
+                tokenExpired,
+            },{ new: true, upsert: true }, (err, user) => {
+                res.status(200).send({
+                    message: 'Login successful !!!',
+                    data: {
+                        email: user.email,
+                        token,
+                        tokenExpired,
+                        role: user.role,
+                        createdAt: user.createdAt
+                    }
+                });
+            });
+        } else {
             res.status(400).send({
-                message: 'Account have NOT activated !!!'
+                message: 'Email or Password invalid !!!'
             })
         }
-        const token = utility.makeId(12);
-        const tokenExpired = new Date(new Date().getTime() + config.lifeTimeCode);
-        User.findOneAndUpdate({
-            _id: user._id
-        }, {
-            token,
-            tokenExpired,
-        },{ new: true, upsert: true }, (err, user) => {
-            res.status(200).send({
-                message: 'Login successful !!!',
-                data: {
-                    email: user.email,
-                    token,
-                    tokenExpired,
-                    role: user.role,
-                    createdAt: user.createdAt
-                }
-            });
-        });
     });
 }
