@@ -119,3 +119,24 @@ exports.login = (req, res) => {
         }
     });
 }
+
+exports.getInformation = (req, res) => {
+    User.findOne({
+        token: req.params.id,
+        tokenExpired: {$gt: new Date()}
+    }, (err, user) => {
+        if (!user) {
+            res.status(400).send({
+                message: 'Token invalid or expired !!!'
+            })
+        } else {
+            res.status(200).send({
+                message: 'Get Account successful !!!',
+                user: {
+                    email: user.email,
+                    role: user.role,
+                }
+            })
+        }
+    })
+}

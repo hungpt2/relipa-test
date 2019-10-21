@@ -152,6 +152,37 @@
         }
       }
     },
+    "/info/{id}": {
+      "get": {
+        "tags": ["Authentication"],
+        "summary": "API Endpoint for get user information",
+        "description": "User Information",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": "true",
+            "description": "user token",
+            "type": "string"
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Account Activated!!!",
+            "schema": {
+              "$ref": "#definitions/RegisterResponseSuccess"
+            }
+          },
+          "400": {
+            "description": "Verify Failed!!!",
+            "schema": {
+              "$ref": "#definitions/ResponseMessage"
+            }
+          }
+        }
+      }
+    },
     "/store": {
       "get": {
         "security": [{
