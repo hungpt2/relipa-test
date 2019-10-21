@@ -23,6 +23,10 @@ app.use('/v1/currency', currency);
 const user = require('./routes/user.route');
 app.use('/v1', user);
 
+// STORE
+const store = require('./routes/store.route');
+app.use('/v1/store', store);
+
 // Set up mongoose connection
 const db = require('./mlab');
 
