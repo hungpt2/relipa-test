@@ -8,7 +8,7 @@
       "email": "hungpt2@relipasoft.com"
     }
   },
-  "host": "localhost:8888",
+  "host": "sheltered-badlands-02083.herokuapp.com",
   "basePath": "/v1",
   "tags": [
     {
