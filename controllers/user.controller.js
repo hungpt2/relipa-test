@@ -10,8 +10,9 @@ exports.authenticate = (token) => {
                 email: user.email,
                 role: user.role
             };
-        }
+        } else return null
     })
+    return user
 }
 
 exports.createUser = async (req, res) => {
