@@ -191,7 +191,30 @@
         "tags": ["Store Management"],
         "summary": "API Endpoint for Store Management",
         "description": "Get list Store",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "pageIndex",
+            "in": "query",
+            "type": "integer"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "type": "integer"
+          },
+          {
+            "name": "name",
+            "description": "Store params to filter list Store",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "description",
+            "description": "Store params to filter list Store",
+            "in": "query",
+            "type": "string"
+          }
+        ],
         "produces": ["application/json"],
         "responses": {
           "200": {

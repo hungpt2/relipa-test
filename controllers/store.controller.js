@@ -1,16 +1,17 @@
 const storeTools = require('../common/validator/store');
 const Store = require('../models/store.model');
+const constant = require('../common/constant');
 
 exports.getListStore = async (req, res) => {
-    const pageSize = Math.max(1, req.body.pageSize ? req.body.pageSize : 10);
-    const pageIndex = Math.max(0, req.body.pageIndex ? req.body.pageSize : 0);
+    const pageSize = Math.max(1, req.query.pageSize ? req.query.pageSize : 10);
+    const pageIndex = Math.max(0, req.query.pageIndex ? req.query.pageSize : 0);
     const filter = {}
 
-    if (req.body.name) {
-        filter.name = req.body.name
+    if (req.query.name) {
+        filter.name = {'$regex': req.query.name}
     }
-    if (req.body.description) {
-        filter.description = req.body.description
+    if (req.query.description) {
+        filter.description ={'$regex': req.query.description}
     }
     Store.find(filter)
     .limit(pageSize)
@@ -19,7 +20,7 @@ exports.getListStore = async (req, res) => {
         name: 'asc'
     })
     .exec(function(err, events) {
-        Store.count().exec(function(err, count) {
+        Store.count(filter).exec(function(err, count) {
             if (err) {
                 res.status(400).send({
                     data: err
@@ -39,7 +40,7 @@ exports.getListStore = async (req, res) => {
 };
 
 exports.createStore = async (req, res) => {
-    if (req.user.role !== '1') {
+    if (req.user.role !== constant.ADMIN_ROLE) {
         res.status(400).send({
             message: 'Invalid Authentication Credentials'
         })
@@ -73,9 +74,19 @@ exports.createStore = async (req, res) => {
 };
 
 exports.updateStore = async (req, res) => {
-    console.log(req);
+    if (req.user.role !== constant.ADMIN_ROLE) {
+        res.status(400).send({
+            message: 'Invalid Authentication Credentials'
+        })
+        return
+    }
 };
 
 exports.deleteStore = async (req, res) => {
-    console.log(req);
+    if (req.user.role !== constant.ADMIN_ROLE) {
+        res.status(400).send({
+            message: 'Invalid Authentication Credentials'
+        })
+        return
+    }
 };

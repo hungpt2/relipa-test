@@ -1,4 +1,6 @@
 module.exports = {
+    ADMIN_ROLE: '1',
+    USER_ROLE: '1',
     emailLength: 100,
     passwordMin: 8,
     passwordMax: 50,
