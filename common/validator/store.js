@@ -32,3 +32,45 @@ exports.storeValidator = async function (store) {
 
     return result
 };
+
+exports.editStoreValidator = async function (id, store) {
+    if (!id) {
+        result = {
+            status: false,
+            message: 'Id required!!!'
+        }
+        return result
+    }
+
+    const storeDb = await Store.findOne({ '_id': id })
+
+    let result = {
+        status: true,
+        message: 'Store can be action!!!',
+        data: storeDb
+    }
+
+    if (!result.data) {
+        result = {
+            status: false,
+            message: `The Store invalid!!!`
+        }
+        return result
+    }
+
+    if (!store.name) {
+        result = {
+            status: false,
+            message: 'Name error!!!'
+        }
+    }
+
+    if (!store.description || store.description.length > constant.store.descriptionLength) {
+        result = {
+            status: false,
+            message: 'Description error!!!'
+        }
+    }
+
+    return result
+};

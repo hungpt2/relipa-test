@@ -5,7 +5,8 @@ const Schema = mongoose.Schema;
 let StoreSchema = new Schema({
     name: {type: String, required: true, max: constant.store.nameLength},
     description: {type: String, max: constant.store.descriptionLength},
-    img64: {type: Array}
+    img64: {type: Array},
+    isActive: {type: Boolean}
 });
 
 // Export the model

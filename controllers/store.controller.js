@@ -58,7 +58,8 @@ exports.createStore = async (req, res) => {
         {
             name: req.body.name,
             description: req.body.description,
-            image: req.body.image
+            image: req.body.image,
+            isActive: true
         }
     );
 
@@ -80,6 +81,27 @@ exports.updateStore = async (req, res) => {
         })
         return
     }
+
+    const checker = await storeTools.editStoreValidator(req.params.id, req.body);
+    if (!checker.status) {
+        res.status(400).send({
+            message: checker.message
+        })
+        return
+    }
+
+    Store.findOneAndUpdate({
+        _id: req.body.id
+    }, Object.assign({}, checker.data, req.body), {
+        new: true,
+        upsert: true
+    }, (err, store) => {
+        res.status(200).send({
+            message: 'The Store updated !!!',
+            data: store
+        })
+    });
+
 };
 
 exports.deleteStore = async (req, res) => {
@@ -89,4 +111,16 @@ exports.deleteStore = async (req, res) => {
         })
         return
     }
+
+    Store.findByIdAndRemove({
+        _id: req.params.id
+    }, {
+        new: true,
+        upsert: true
+    }, (err, store) => {
+        res.status(200).send({
+            message: 'The Store updated !!!',
+            data: store
+        })
+    });
 };

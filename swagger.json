@@ -266,7 +266,24 @@
         "tags": ["Store Management"],
         "summary": "API Endpoint for Update Store",
         "description": "Get list Store",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "id",
+            "description": "Store params to edit store",
+            "in": "path",
+            "required": "true",
+            "type": "string"
+          },
+          {
+            "name": "store",
+            "description": "Store params to edit store",
+            "in": "body",
+            "required": "true",
+            "schema": {
+              "$ref": "#definitions/Store"
+            }
+          }
+        ],
         "produces": ["application/json"],
         "responses": {
           "200": {
