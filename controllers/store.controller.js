@@ -4,7 +4,7 @@ const constant = require('../common/constant');
 
 exports.getListStore = async (req, res) => {
     const pageSize = Math.max(1, req.query.pageSize ? req.query.pageSize : 10);
-    const pageIndex = Math.max(0, req.query.pageIndex ? req.query.pageSize : 0);
+    const pageIndex = Math.max(0, req.query.pageIndex ? req.query.pageIndex : 0);
     const filter = {}
 
     if (req.query.name) {
@@ -20,7 +20,7 @@ exports.getListStore = async (req, res) => {
         name: 'asc'
     })
     .exec(function(err, events) {
-        Store.count(filter).exec(function(err, count) {
+        Store.countDocuments(filter).exec(function(err, count) {
             if (err) {
                 res.status(400).send({
                     data: err
@@ -91,10 +91,11 @@ exports.updateStore = async (req, res) => {
     }
 
     Store.findOneAndUpdate({
-        _id: req.body.id
-    }, Object.assign({}, checker.data, req.body), {
+        _id: req.params.id
+    }, req.body, {
         new: true,
-        upsert: true
+        upsert: true,
+        useFindAndModify: false
     }, (err, store) => {
         res.status(200).send({
             message: 'The Store updated !!!',
@@ -112,14 +113,14 @@ exports.deleteStore = async (req, res) => {
         return
     }
 
-    Store.findByIdAndRemove({
-        _id: req.params.id
-    }, {
-        new: true,
-        upsert: true
+    console.log(req.params.id)
+
+    Store.findByIdAndRemove(req.params.id, {
+        useFindAndModify: false
     }, (err, store) => {
+        console.log(err, store);
         res.status(200).send({
-            message: 'The Store updated !!!',
+            message: 'The Store deleted !!!',
             data: store
         })
     });

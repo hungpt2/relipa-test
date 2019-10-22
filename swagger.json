@@ -195,11 +195,13 @@
           {
             "name": "pageIndex",
             "in": "query",
+            "required": "true",
             "type": "integer"
           },
           {
             "name": "pageSize",
             "in": "query",
+            "required": "true",
             "type": "integer"
           },
           {
@@ -227,7 +229,9 @@
             }
           }
         }
-      },
+      }
+    },
+    "/store/create": {
       "post": {
         "security": [{
           "Bearer": []
@@ -258,7 +262,9 @@
             }
           }
         }
-      },
+      }
+    },
+    "/store/edit/{id}": {
       "put": {
         "security": [{
           "Bearer": []
@@ -269,7 +275,6 @@
         "parameters": [
           {
             "name": "id",
-            "description": "Store params to edit store",
             "in": "path",
             "required": "true",
             "type": "string"
@@ -296,106 +301,14 @@
             }
           }
         }
-      },
+      }
+    },
+    "/store/delete/{id}": {
       "delete": {
         "security": [{
           "Bearer": []
         }],
         "tags": ["Store Management"],
-        "summary": "API Endpoint for Delete Store",
-        "description": "Delete Store",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": "true",
-            "description": "store id",
-            "type": "string"
-          }
-        ],
-        "produces": ["application/json"],
-        "responses": {
-          "200": {
-            "description": "Delete Store successfully!!!"
-          },
-          "400": {
-            "description": "Get list Failed!!!",
-            "schema": {
-              "$ref": "#definitions/ResponseMessage"
-            }
-          }
-        }
-      }
-    },
-    "/product": {
-      "get": {
-        "security": [{
-          "Bearer": []
-        }],
-        "tags": ["Product Management"],
-        "summary": "API Endpoint for Store Management",
-        "description": "Get list Store",
-        "parameters": [],
-        "produces": ["application/json"],
-        "responses": {
-          "200": {
-            "description": "Get list successfully!!!"
-          },
-          "400": {
-            "description": "Get list Failed!!!",
-            "schema": {
-              "$ref": "#definitions/ResponseMessage"
-            }
-          }
-        }
-      },
-      "post": {
-        "security": [{
-          "Bearer": []
-        }],
-        "tags": ["Product Management"],
-        "summary": "API Endpoint for Create Store",
-        "description": "Create Store",
-        "parameters": [],
-        "produces": ["application/json"],
-        "responses": {
-          "200": {
-            "description": "Create store successfully!!!"
-          },
-          "400": {
-            "description": "Create store Failed!!!",
-            "schema": {
-              "$ref": "#definitions/ResponseMessage"
-            }
-          }
-        }
-      },
-      "put": {
-        "security": [{
-          "Bearer": []
-        }],
-        "tags": ["Product Management"],
-        "summary": "API Endpoint for Update Store",
-        "description": "Get list Store",
-        "parameters": [],
-        "produces": ["application/json"],
-        "responses": {
-          "200": {
-            "description": "Update Store successfully!!!"
-          },
-          "400": {
-            "description": "Update Store Failed!!!",
-            "schema": {
-              "$ref": "#definitions/ResponseMessage"
-            }
-          }
-        }
-      },
-      "delete": {
-        "security": [{
-          "Bearer": []
-        }],
-        "tags": ["Product Management"],
         "summary": "API Endpoint for Delete Store",
         "description": "Delete Store",
         "parameters": [

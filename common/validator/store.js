@@ -58,7 +58,7 @@ exports.editStoreValidator = async function (id, store) {
         return result
     }
 
-    if (!store.name) {
+    if (!store.name || store.name !== storeDb.name) {
         result = {
             status: false,
             message: 'Name error!!!'
