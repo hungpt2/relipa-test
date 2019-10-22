@@ -2,7 +2,40 @@ const storeTools = require('../common/validator/store');
 const Store = require('../models/store.model');
 
 exports.getListStore = async (req, res) => {
-    console.log(req);
+    const pageSize = Math.max(1, req.body.pageSize ? req.body.pageSize : 10);
+    const pageIndex = Math.max(0, req.body.pageIndex ? req.body.pageSize : 0);
+    const filter = {}
+
+    if (req.body.name) {
+        filter.name = req.body.name
+    }
+    if (req.body.description) {
+        filter.description = req.body.description
+    }
+    Store.find(filter)
+    .limit(pageSize)
+    .skip(pageSize * pageIndex)
+    .sort({
+        name: 'asc'
+    })
+    .exec(function(err, events) {
+        Store.count().exec(function(err, count) {
+            if (err) {
+                res.status(400).send({
+                    data: err
+                })
+            }
+            res.status(200).send({
+                message: `Get list store successfully!!!`,
+                data: events,
+                paginator: {
+                    pageIndex,
+                    pageSize,
+                    totalItem: count,
+                }
+            })
+        })
+    })
 };
 
 exports.createStore = async (req, res) => {
