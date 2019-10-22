@@ -1,33 +1,41 @@
-const storeTools = require('../common/validator/store');
-const Store = require('../models/store.model');
+const productTools = require('../common/validator/product');
+const Product = require('../models/product.model');
 const constant = require('../common/constant');
 
-exports.getListStore = async (req, res) => {
-    const pageSize = Math.max(1, req.query.pageSize ? req.query.pageSize : 10);
-    const pageIndex = Math.max(0, req.query.pageIndex ? req.query.pageIndex : 0);
+exports.getListProduct = async (req, res) => {
     const filter = {}
-
+    if (req.query.storeId) {
+        filter.storeId = req.query.storeId
+    } else {
+        res.status(400).send({
+            message: 'Store Id required!!!'
+        })
+    }
     if (req.query.name) {
         filter.name = {'$regex': req.query.name}
     }
     if (req.query.description) {
         filter.description ={'$regex': req.query.description}
     }
-    Store.find(filter)
+
+    const pageSize = Math.max(1, req.query.pageSize ? req.query.pageSize : 10);
+    const pageIndex = Math.max(0, req.query.pageIndex ? req.query.pageIndex : 0);
+    
+    Product.find(filter)
     .limit(pageSize)
     .skip(pageSize * pageIndex)
     .sort({
         name: 'asc'
     })
     .exec(function(err, events) {
-        Store.countDocuments(filter).exec(function(err, count) {
+        Product.countDocuments(filter).exec(function(err, count) {
             if (err) {
                 res.status(400).send({
                     data: err
                 })
             }
             res.status(200).send({
-                message: `Get list store successfully!!!`,
+                message: `Get list product successfully!!!`,
                 data: events,
                 paginator: {
                     pageIndex,
@@ -39,7 +47,7 @@ exports.getListStore = async (req, res) => {
     })
 };
 
-exports.createStore = async (req, res) => {
+exports.createProduct = async (req, res) => {
     if (req.user.role !== constant.ADMIN_ROLE) {
         res.status(400).send({
             message: 'Invalid Authentication Credentials'
@@ -47,34 +55,35 @@ exports.createStore = async (req, res) => {
         return
     }
 
-    const checker = await storeTools.storeValidator(req.body);
+    const checker = await productTools.createProductValidator(req.body);
     if (!checker.status) {
         res.status(400).send({
             message: checker.message
         })
         return
     }
-    let store = new Store(
+    let product = new Product(
         {
             name: req.body.name,
             description: req.body.description,
             image: req.body.image,
+            storeId: req.body.storeId,
             isActive: true
         }
     );
 
-    store.save((err) => {
+    product.save((err) => {
         if (err) {
             return next(err);
         }
         res.status(200).send({
-            message: `${store.name} Created successfully!!!`,
-            data: store
+            message: `${product.name} Created successfully!!!`,
+            data: product
         })
     });
 };
 
-exports.updateStore = async (req, res) => {
+exports.updateProduct = async (req, res) => {
     if (req.user.role !== constant.ADMIN_ROLE) {
         res.status(400).send({
             message: 'Invalid Authentication Credentials'
@@ -82,7 +91,7 @@ exports.updateStore = async (req, res) => {
         return
     }
 
-    const checker = await storeTools.editStoreValidator(req.params.id, req.body);
+    const checker = await productTools.editProductValidator(req.params.id, req.body);
     if (!checker.status) {
         res.status(400).send({
             message: checker.message
@@ -90,22 +99,22 @@ exports.updateStore = async (req, res) => {
         return
     }
 
-    Store.findOneAndUpdate({
+    Product.findOneAndUpdate({
         _id: req.params.id
     }, req.body, {
         new: true,
         upsert: true,
         useFindAndModify: false
-    }, (err, store) => {
+    }, (err, product) => {
         res.status(200).send({
-            message: 'The Store updated !!!',
-            data: store
+            message: 'The product updated !!!',
+            data: product
         })
     });
 
 };
 
-exports.deleteStore = async (req, res) => {
+exports.deleteProduct = async (req, res) => {
     if (req.user.role !== constant.ADMIN_ROLE) {
         res.status(400).send({
             message: 'Invalid Authentication Credentials'
@@ -113,12 +122,12 @@ exports.deleteStore = async (req, res) => {
         return
     }
 
-    Store.findByIdAndRemove(req.params.id, {
+    Product.findByIdAndRemove(req.params.id, {
         useFindAndModify: false
-    }, (err, store) => {
+    }, (err, product) => {
         res.status(200).send({
-            message: 'The Store deleted !!!',
-            data: store
+            message: 'The product deleted !!!',
+            data: product
         })
     });
 };

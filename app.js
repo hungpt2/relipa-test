@@ -27,6 +27,10 @@ app.use('/v1', user);
 const store = require('./routes/store.route');
 app.use('/v1/store', store);
 
+// PRODUCT
+const product = require('./routes/product.route');
+app.use('/v1/product', product);
+
 // Set up mongoose connection
 const db = require('./mlab');
 

@@ -271,7 +271,6 @@
         }],
         "tags": ["Store Management"],
         "summary": "API Endpoint for Update Store",
-        "description": "Get list Store",
         "parameters": [
           {
             "name": "id",
@@ -333,6 +332,159 @@
           }
         }
       }
+    },
+    "/product": {
+      "get": {
+        "security": [{
+          "Bearer": []
+        }],
+        "tags": ["Product Management"],
+        "summary": "API Endpoint for Product Management",
+        "description": "Get list Product",
+        "parameters": [
+          {
+            "name": "storeId",
+            "in": "query",
+            "required": "true",
+            "type": "string"
+          },
+          {
+            "name": "pageIndex",
+            "in": "query",
+            "required": "true",
+            "type": "integer"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": "true",
+            "type": "integer"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "description",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Get list successfully!!!"
+          },
+          "400": {
+            "description": "Get list Failed!!!",
+            "schema": {
+              "$ref": "#definitions/ResponseMessage"
+            }
+          }
+        }
+      }
+    },
+    "/product/create": {
+      "post": {
+        "security": [{
+          "Bearer": []
+        }],
+        "tags": ["Product Management"],
+        "summary": "API Endpoint for Create Product",
+        "description": "Create Product",
+        "parameters": [
+          {
+            "name": "product",
+            "description": "Product params to create new product",
+            "in": "body",
+            "required": "true",
+            "schema": {
+              "$ref": "#definitions/Product"
+            }
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Create Product successfully!!!"
+          },
+          "400": {
+            "description": "Create Product Failed!!!",
+            "schema": {
+              "$ref": "#definitions/ResponseMessage"
+            }
+          }
+        }
+      }
+    },
+    "/product/edit/{id}": {
+      "put": {
+        "security": [{
+          "Bearer": []
+        }],
+        "tags": ["Product Management"],
+        "summary": "API Endpoint for Update Product",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": "true",
+            "type": "string"
+          },
+          {
+            "name": "product",
+            "in": "body",
+            "required": "true",
+            "schema": {
+              "$ref": "#definitions/Product"
+            }
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Update Store successfully!!!"
+          },
+          "400": {
+            "description": "Update Store Failed!!!",
+            "schema": {
+              "$ref": "#definitions/ResponseMessage"
+            }
+          }
+        }
+      }
+    },
+    "/product/delete/{id}": {
+      "delete": {
+        "security": [{
+          "Bearer": []
+        }],
+        "tags": ["Product Management"],
+        "summary": "API Endpoint for Delete Product",
+        "description": "Delete Product",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": "true",
+            "description": "product id",
+            "type": "string"
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Delete Product successfully!!!"
+          },
+          "400": {
+            "description": "Get list Failed!!!",
+            "schema": {
+              "$ref": "#definitions/ResponseMessage"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -355,6 +507,32 @@
         },
         "description": {
           "type": "string"
+        },
+        "isActive": {
+          "type": "boolean"
+        },
+        "image": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "Product": {
+      "required": ["name", "description", "storeId"],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "storeId": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "isActive": {
+          "type": "boolean"
         },
         "image": {
           "type": "array",

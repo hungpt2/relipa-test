@@ -9,5 +9,9 @@ module.exports = {
     store: {
         nameLength: 50,
         descriptionLength: 100
+    },
+    product: {
+        nameLength: 50,
+        descriptionLength: 100
     }
 }
