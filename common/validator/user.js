@@ -25,7 +25,7 @@ exports.userValidator = async function (user) {
     if (userDb) {
         result = {
             status: false,
-            message: `${user.name} has been created!!!`
+            message: `${user.email} has been created!!!`
         }
     }
 
