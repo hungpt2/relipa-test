@@ -1,13 +1,19 @@
 const storeTools = require('../common/validator/store');
+const Store = require('../models/store.model');
 
 exports.getListStore = async (req, res) => {
     console.log(req);
 };
 
 exports.createStore = async (req, res) => {
-    // TODO: check auth
+    if (req.user.role !== '1') {
+        res.status(400).send({
+            message: 'Invalid Authentication Credentials'
+        })
+        return
+    }
 
-    const checker = await storeTools.userValidator(req.body);
+    const checker = await storeTools.storeValidator(req.body);
     if (!checker.status) {
         res.status(400).send({
             message: checker.message

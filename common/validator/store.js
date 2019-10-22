@@ -21,14 +21,14 @@ exports.storeValidator = async function (store) {
         }
     }
 
-    await Store.findOne({ 'name': store.name }, function (err, email) {
-        if (email) {
-            result = {
-                status: false,
-                message: `${store.name} has been created!!!`
-            }
+    const storeDb = await Store.findOne({ 'name': store.name })
+
+    if (storeDb) {
+        result = {
+            status: false,
+            message: `${store.name} has been created!!!`
         }
-    })
+    }
 
     return result
 };

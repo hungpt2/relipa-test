@@ -21,14 +21,13 @@ exports.userValidator = async function (user) {
         }
     }
 
-    await User.findOne({ 'email': user.email }, function (err, email) {
-        if (email) {
-            result = {
-                status: false,
-                message: 'Email has been created!!!'
-            }
+    const userDb = await User.findOne({ 'email': user.email })
+    if (userDb) {
+        result = {
+            status: false,
+            message: `${store.name} has been created!!!`
         }
-    })
-
+    }
+    
     return result
 };
