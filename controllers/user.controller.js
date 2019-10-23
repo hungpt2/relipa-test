@@ -4,7 +4,7 @@ const config = require('../config');
 const userTools = require('../common/validator/user');
 
 exports.authenticate = (token) => {
-    const user = User.findOne({ token, tokenExpired: {$gt: new Date()} }, (err, user) => {
+    const user = User.findOne({ token, tokenExpired: {$lt: new Date()} }, (err, user) => {
         if (user) {
             return {
                 email: user.email,
@@ -53,9 +53,9 @@ exports.createUser = async (req, res) => {
 
 exports.verifyAccount = (req, res) => {
     User.findOne({
-        verifyCode: req.params.verifyCode,
+        verifyCode: req.params.id,
         isVerified: false,
-        lifeTimeCode: {$gt: new Date()}
+        lifeTimeCode: {$lt: new Date()}
     }, (err, user) => {
         if (!user) {
             res.status(400).send({
@@ -68,7 +68,8 @@ exports.verifyAccount = (req, res) => {
                 isVerified: true,
             },{
                 new: true,
-                upsert: true
+                upsert: true,
+                useFindAndModify: false
             }, (err, user) => {
                 res.status(200).send({
                     message: 'Account activated !!!',

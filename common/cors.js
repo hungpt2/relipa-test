@@ -1,5 +1,5 @@
 const cors = require('cors');
-const allowedOrigins = ['localhost:8080', 'sheltered-badlands-02083.herokuapp.com'];
+const allowedOrigins = ['http://localhost:8888', 'http://localhost:8080', 'http://sheltered-badlands-02083.herokuapp.com'];
 
 app.use(cors({
   origin: (origin, callback) => {
