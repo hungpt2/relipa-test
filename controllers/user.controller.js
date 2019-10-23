@@ -53,7 +53,7 @@ exports.createUser = async (req, res) => {
 
 exports.verifyAccount = (req, res) => {
     User.findOne({
-        verifyCode: req.params.id,
+        verifyCode: req.params.verifyCode,
         isVerified: false,
         lifeTimeCode: {$gt: new Date()}
     }, (err, user) => {
