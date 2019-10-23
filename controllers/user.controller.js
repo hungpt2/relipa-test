@@ -100,7 +100,7 @@ exports.login = (req, res) => {
             }, {
                 token,
                 tokenExpired,
-            },{ new: true, upsert: true }, (err, user) => {
+            },{ new: true, upsert: true, useFindAndModify: false }, (err, user) => {
                 res.status(200).send({
                     message: 'Login successful !!!',
                     data: {
