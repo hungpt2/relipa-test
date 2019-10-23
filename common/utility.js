@@ -1,5 +1,5 @@
 const postMan = require('./email');
-const User = require('../models/user.model');
+const config = require('../config');
 
 exports.makeId = (length) => {
     var result           = '';
@@ -17,7 +17,7 @@ exports.sendEmail = (user, successFunc, failFunc) => {
         to: user.email,
         subject: '[Shop Relipee] Activate Email',
         text: `Hello ${user.email},`,
-        html: `<b>Click <a href="${'localhost:4200/activated/' + user.verifyCode}">here</a> to active email!</b>`
+        html: `<b>Click <a href="${config.clientUrl + '/activated/' + user.verifyCode}">here</a> to active email!</b>`
     })
     .then(() => {
         if (successFunc) {

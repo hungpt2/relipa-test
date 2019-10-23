@@ -16,5 +16,6 @@ module.exports = {
         port: '2525',
     },
     currency_api: 'http://apilayer.net/api/',
-    currency_key: 'bb974560f77e99c7ea637d7c61ceabc8'
+    currency_key: 'bb974560f77e99c7ea637d7c61ceabc8',
+    clientUrl: 'localhost:8080'
 }
