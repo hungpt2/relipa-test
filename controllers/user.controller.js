@@ -4,7 +4,7 @@ const config = require('../config');
 const userTools = require('../common/validator/user');
 
 exports.authenticate = (token) => {
-    const user = User.findOne({ token, tokenExpired: {$lt: new Date()} }, (err, user) => {
+    User.findOne({ token, tokenExpired: {$lt: new Date()} }, (err, user) => {
         if (user) {
             return {
                 email: user.email,
@@ -12,7 +12,6 @@ exports.authenticate = (token) => {
             };
         } else return null
     })
-    return user
 }
 
 exports.createUser = async (req, res) => {
@@ -124,7 +123,7 @@ exports.login = (req, res) => {
 exports.getInformation = (req, res) => {
     User.findOne({
         token: req.params.id,
-        tokenExpired: {$gt: new Date()}
+        tokenExpired: {$lt: new Date()}
     }, (err, user) => {
         if (!user) {
             res.status(400).send({
