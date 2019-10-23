@@ -16,7 +16,7 @@
       "description": "API for Shop Relipees"
     }
   ],
-  "schemes": ["http"],
+  "schemes": ["http", "https"],
   "securityDefinitions": {
     "Bearer": {
       "type": "apiKey",
