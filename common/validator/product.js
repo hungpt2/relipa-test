@@ -22,6 +22,13 @@ exports.createProductValidator = async function (product) {
         }
     }
 
+    if (!product.price) {
+        result = {
+            status: false,
+            message: 'Price error!!!'
+        }
+    }
+
     if (!product.description || product.description.length > constant.product.descriptionLength) {
         result = {
             status: false,
@@ -84,6 +91,13 @@ exports.editProductValidator = async function (id, product) {
         result = {
             status: false,
             message: 'Description error!!!'
+        }
+    }
+
+    if (!product.price) {
+        result = {
+            status: false,
+            message: 'Price error!!!'
         }
     }
 

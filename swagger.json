@@ -531,6 +531,10 @@
         "description": {
           "type": "string"
         },
+        "price": {
+          "type": "integer",
+          "format": "Int32"
+        },
         "isActive": {
           "type": "boolean"
         },
