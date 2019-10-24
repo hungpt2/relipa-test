@@ -7,7 +7,7 @@ let ProductSchema = new Schema({
     storeId: {type: String, required: true},
     description: {type: String, max: constant.product.descriptionLength},
     price: {type: Number},
-    img64: {type: Array},
+    image: {type: Array},
     isActive: {type: Boolean},
 });
 
