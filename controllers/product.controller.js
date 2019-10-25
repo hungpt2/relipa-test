@@ -20,6 +20,7 @@ exports.getListProduct = async (req, res) => {
 
     const pageSize = Math.max(1, req.query.pageSize ? req.query.pageSize : 10);
     const pageIndex = Math.max(0, req.query.pageIndex ? req.query.pageIndex : 0);
+
     Product.find(filter)
     .limit(pageSize)
     .skip(pageSize * pageIndex)
