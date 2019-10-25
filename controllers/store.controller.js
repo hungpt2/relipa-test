@@ -39,6 +39,30 @@ exports.getListStore = async (req, res) => {
     })
 };
 
+exports.getStoreById = async (req, res) => {
+    if (req.user.role !== constant.ADMIN_ROLE) {
+        res.status(400).send({
+            message: 'Invalid Authentication Credentials'
+        })
+        return
+    }
+
+    Store.findOne({
+        _id: req.params.id,
+    }, (err, store) => {
+        if (!store) {
+            res.status(400).send({
+                message: 'Cannot found !!!'
+            })
+        } else {
+            res.status(200).send({
+                message: 'Get Store successful !!!',
+                data: store
+            })
+        }
+    })
+};
+
 exports.createStore = async (req, res) => {
     if (req.user.role !== constant.ADMIN_ROLE) {
         res.status(400).send({

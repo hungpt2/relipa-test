@@ -231,6 +231,36 @@
         }
       }
     },
+    "/store/{id}": {
+      "get": {
+        "security": [{
+          "Bearer": []
+        }],
+        "tags": ["Store Management"],
+        "summary": "API Endpoint for Store Management",
+        "description": "Get list Store",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": "true",
+            "type": "string"
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Get list successfully!!!"
+          },
+          "400": {
+            "description": "Get list Failed!!!",
+            "schema": {
+              "$ref": "#definitions/ResponseMessage"
+            }
+          }
+        }
+      }
+    },
     "/store/create": {
       "post": {
         "security": [{

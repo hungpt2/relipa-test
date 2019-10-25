@@ -5,6 +5,7 @@ const router = express.Router();
 const store_controller = require('../controllers/store.controller');
 
 router.get('/', isAuthenticated,store_controller.getListStore);
+router.get('/:id', isAuthenticated,store_controller.getStoreById);
 router.post('/create', isAuthenticated, store_controller.createStore);
 router.put('/edit/:id', isAuthenticated,store_controller.updateStore);
 router.delete('/delete/:id', isAuthenticated,store_controller.deleteStore);
