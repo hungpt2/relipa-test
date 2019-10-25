@@ -10,6 +10,7 @@ exports.getListProduct = async (req, res) => {
         res.status(400).send({
             message: 'Store Id required!!!'
         })
+        return
     }
     if (req.query.name) {
         filter.name = {'$regex': req.query.name}
