@@ -415,6 +415,36 @@
         }
       }
     },
+    "/product/{id}": {
+      "get": {
+        "security": [{
+          "Bearer": []
+        }],
+        "tags": ["Product Management"],
+        "summary": "API Endpoint for Product Management",
+        "description": "Get Product by Id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": "true",
+            "type": "string"
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Get Product successfully!!!"
+          },
+          "400": {
+            "description": "Get Product Failed!!!",
+            "schema": {
+              "$ref": "#definitions/ResponseMessage"
+            }
+          }
+        }
+      }
+    },
     "/product/create": {
       "post": {
         "security": [{

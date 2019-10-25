@@ -84,6 +84,30 @@ exports.createProduct = async (req, res) => {
     });
 };
 
+exports.getProductById = async (req, res) => {
+    if (req.user.role !== constant.ADMIN_ROLE) {
+        res.status(400).send({
+            message: 'Invalid Authentication Credentials'
+        })
+        return
+    }
+
+    Product.findOne({
+        _id: req.params.id,
+    }, (err, product) => {
+        if (!product) {
+            res.status(400).send({
+                message: 'Cannot found !!!'
+            })
+        } else {
+            res.status(200).send({
+                message: 'Get Product successful !!!',
+                data: product
+            })
+        }
+    })
+};
+
 exports.updateProduct = async (req, res) => {
     if (req.user.role !== constant.ADMIN_ROLE) {
         res.status(400).send({
