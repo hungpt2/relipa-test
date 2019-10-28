@@ -34,6 +34,8 @@ app.use('/v1/product', product);
 // Set up mongoose connection
 const db = require('./mlab');
 
+app.disable('etag');
+
 app.listen(process.env.PORT || config.port, (err) => {
     if (err) throw err
     console.log('Server is up and running on port: ' + config.port);
